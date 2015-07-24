@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://cxf.apache.org/jaxws
+        http://cxf.apache.org/schemas/jaxws.xsd
+        http://cxf.apache.org/core
+        http://cxf.apache.org/schemas/core.xsd">
+
+    <!-- ************************************************************************************** -->
+    <!-- 1. GENERAL CONFIG FOR CORESERVICE (component scanning etc) -->
+    <!-- ************************************************************************************** -->
+
+
+    <context:annotation-config/>
+    <context:component-scan base-package="cxfdemo.abhi.com"/>
+    <bean id="propertyPlaceholderConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:conf/cust-conf.properties</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <!--                    SOAP end point definition
+
+    endpointName = wsdl port type name ( see wsdl: <wsdl:portType name="CustomerService">)
+    serviceName = wsdl service name (see wsdl:  <wsdl:service name="CustomerServiceService">)
+    address=its your given name: configurable in properties file (add entry in  cust-conf.properties file)
+    -->
+
+    <jaxws:endpoint xmlns:customer="http://com.abhi.cxfdemo/"
+                    id="CustomerServiceHTTP" address="${cxfdemo.ws.endpoint.address}"
+                    serviceName="customer:CustomerServiceService" endpointName="customer:CustomerServicePort"
+                    implementor="cxfdemo.abhi.com.webservice.impl.CustomerServiceImpl">
+
+        <jaxws:properties>
+            <entry key="schema-validation-enabled" value="${cxfdemo.ws.endpoint.validateSchema}"/>
+        </jaxws:properties>
+
+    </jaxws:endpoint>
+
+    <bean id="logInbound" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+    <bean id="logOutbound" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+
+    <cxf:bus>
+        <cxf:inInterceptors>
+            <ref bean="logInbound"/>
+        </cxf:inInterceptors>
+        <cxf:outInterceptors>
+            <ref bean="logOutbound"/>
+        </cxf:outInterceptors>
+        <cxf:outFaultInterceptors>
+            <ref bean="logOutbound"/>
+        </cxf:outFaultInterceptors>
+        <cxf:inFaultInterceptors>
+            <ref bean="logInbound"/>
+        </cxf:inFaultInterceptors>
+    </cxf:bus>
+
+
+    <!-- this switches on the oracle database -->
+
+    <!--    <bean id="springDataSource"
+             class="oracle.jdbc.pool.OracleConnectionPoolDataSource">
+            <property name="driverType" value="${db.driver}" />
+            <property name="URL" value="${db.url}" />
+            <property name="user" value="${db.user}" />
+            <property name="password" value="${db.password}" />
+        </bean>-->
+
+
+</beans>

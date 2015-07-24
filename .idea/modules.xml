@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cxfcontracfirst-WAR/cxfcontracfirst-WAR.iml" filepath="$PROJECT_DIR$/cxfcontracfirst-WAR/cxfcontracfirst-WAR.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cxfcontracfirst-impl/cxfcontracfirst-impl.iml" filepath="$PROJECT_DIR$/cxfcontracfirst-impl/cxfcontracfirst-impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cxfcontracfirst-stubs/cxfcontracfirst-stubs.iml" filepath="$PROJECT_DIR$/cxfcontracfirst-stubs/cxfcontracfirst-stubs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samplecxfservice.iml" filepath="$PROJECT_DIR$/samplecxfservice.iml" />
+    </modules>
+  </component>
+</project>

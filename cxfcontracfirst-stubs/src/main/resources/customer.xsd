@@ -1,0 +1,61 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://com.abhi.cxfdemo/"
+           attributeFormDefault="unqualified" elementFormDefault="unqualified"
+           targetNamespace="http://com.abhi.cxfdemo/">
+    <xs:element name="updateCustomer">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="customer" type="tns:customer"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="customer">
+        <xs:sequence>
+            <xs:element name="customerId" type="xs:int"/>
+            <xs:element minOccurs="0" name="name" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="address" nillable="true"
+                        type="xs:string"/>
+            <xs:element minOccurs="0" name="numOrders" type="xs:int"/>
+            <xs:element name="revenue" type="xs:double"/>
+            <xs:element minOccurs="0" name="test" type="xs:decimal"/>
+            <xs:element minOccurs="0" name="birthDate" type="xs:date"/>
+            <xs:element minOccurs="0" name="type" type="tns:customerType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="getCustomersByName">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCustomersByNameResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:customer"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateCustomerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="customerType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PRIVATE"/>
+            <xs:enumeration value="BUSINESS"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="NoSuchCustomer">
+
+    </xs:element>
+    <xs:complexType name="NoSuchCustomer">
+        <xs:sequence>
+            <xs:element name="customerName" nillable="true" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

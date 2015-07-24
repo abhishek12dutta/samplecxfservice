@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%date{ISO8601} [%thread] %-5level %logger{36} - %msg %n
+			</Pattern>
+		</layout>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>d:/tmp/samplecxf.log</file>
+
+		<encoder>
+			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<!-- level INFO needed to log SOAP messages -->
+	<logger name="org.apache.cxf.services" additivity="false">
+		<level value="DEBUG" />
+		<!-- specify a dedicated appender for the SOAP messages -->
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="com.mycompany" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="org.springframework" level="ERROR" />
+	<logger name="org.apache" level="ERROR" />
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="FILE" />
+
+	</root>
+</configuration> 
